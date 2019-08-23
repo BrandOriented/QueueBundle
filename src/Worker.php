@@ -485,7 +485,7 @@ class Worker
 
         } finally {
 
-            $this->events->dispatch(EventsList::JOB_FAILED, new JobFailed($connectionName, $job, $e ?: new ManuallyFailedException));
+            $this->events->dispatch(new JobFailed($connectionName, $job, $e ?: new ManuallyFailedException), EventsList::JOB_FAILED);
         }
     }
 
@@ -498,7 +498,7 @@ class Worker
      */
     protected function raiseBeforeJobEvent($connectionName, $job)
     {
-        $this->events->dispatch(EventsList::JOB_PROCESSING, new Event\JobProcessing($connectionName, $job));
+        $this->events->dispatch(new Event\JobProcessing($connectionName, $job), EventsList::JOB_PROCESSING);
     }
 
     /**
@@ -509,7 +509,7 @@ class Worker
      */
     protected function raiseAfterJobEvent($connectionName, $job)
     {
-        $this->events->dispatch(EventsList::JOB_PROCESSED, new Event\JobProcessed($connectionName, $job));
+        $this->events->dispatch(new Event\JobProcessed($connectionName, $job), EventsList::JOB_PROCESSED);
     }
 
     /**
@@ -521,7 +521,7 @@ class Worker
      */
     protected function raiseExceptionOccurredJobEvent($connectionName, $job, $e)
     {
-        $this->events->dispatch(EventsList::JOB_EXCEPTION_OCCURRED, new Event\JobExceptionOccurred($connectionName, $job, $e));
+        $this->events->dispatch(new Event\JobExceptionOccurred($connectionName, $job, $e), EventsList::JOB_EXCEPTION_OCCURRED);
     }
 
 
@@ -606,7 +606,7 @@ class Worker
      */
     public function stop($status = 0)
     {
-        $this->events->dispatch(EventsList::WORKER_STOPPING, new Event\WorkerStopping);
+        $this->events->dispatch(new Event\WorkerStopping, EventsList::WORKER_STOPPING);
 
         exit($status);
     }
@@ -618,7 +618,7 @@ class Worker
      */
     public function kill($status = 0)
     {
-        $this->events->dispatch(EventsList::WORKER_STOPPING, new Event\WorkerStopping);
+        $this->events->dispatch(new Event\WorkerStopping, EventsList::WORKER_STOPPING);
 
         if (extension_loaded('posix')) {
 
@@ -673,7 +673,7 @@ class Worker
      */
     protected function until()
     {
-        return $this->events->dispatch(EventsList::LOOPING, new Event\Looping)->isPropagationStopped();
+        return $this->events->dispatch(new Event\Looping, EventsList::LOOPING)->isPropagationStopped();
     }
 
     /**
@@ -693,6 +693,6 @@ class Worker
      */
     protected function raiseFailedJobEvent($connectionName, $job, $e)
     {
-        $this->events->dispatch(EventsList::JOB_FAILED, new Event\JobFailed($connectionName, $job, $e));
+        $this->events->dispatch(new Event\JobFailed($connectionName, $job, $e), EventsList::JOB_FAILED);
     }
 }

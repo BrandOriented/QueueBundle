@@ -101,7 +101,7 @@ class SyncQueue extends AbstractQueue implements QueueInterface
      */
     protected function raiseBeforeJobEvent(JobsInterface $job)
     {
-        $this->events->dispatch(EventsList::JOB_PROCESSING, new JobProcessing($this->connectionName, $job));
+        $this->events->dispatch(new JobProcessing($this->connectionName, $job), EventsList::JOB_PROCESSING);
     }
 
     /**
@@ -111,7 +111,7 @@ class SyncQueue extends AbstractQueue implements QueueInterface
      */
     protected function raiseAfterJobEvent(JobsInterface $job)
     {
-        $this->events->dispatch(EventsList::JOB_PROCESSED, new JobProcessed($this->connectionName, $job));
+        $this->events->dispatch(new JobProcessed($this->connectionName, $job), EventsList::JOB_PROCESSED);
     }
     /**
      * Raise the exception occurred queue job event.
@@ -121,7 +121,7 @@ class SyncQueue extends AbstractQueue implements QueueInterface
      */
     protected function raiseExceptionOccurredJobEvent(JobsInterface $job, $e)
     {
-        $this->events->dispatch(EventsList::JOB_EXCEPTION_OCCURRED, new JobExceptionOccurred($this->connectionName, $job, $e));
+        $this->events->dispatch(new JobExceptionOccurred($this->connectionName, $job, $e), EventsList::JOB_EXCEPTION_OCCURRED);
     }
 
     /**
@@ -151,7 +151,7 @@ class SyncQueue extends AbstractQueue implements QueueInterface
 
         } finally {
 
-            $this->events->dispatch(EventsList::JOB_FAILED, new JobFailed($this->connectionName, $queueJob, $e ?: new ManuallyFailedException));
+            $this->events->dispatch(new JobFailed($this->connectionName, $queueJob, $e ?: new ManuallyFailedException), EventsList::JOB_FAILED);
         }
 
         throw $e;
