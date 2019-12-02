@@ -17,13 +17,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder;
-        $rootNode = $treeBuilder->root('ideasbucket_queue');
+        $treeBuilder = new TreeBuilder('ideasbucket_queue');
+        $rootNode = $treeBuilder->getRootNode();
         $drivers = ['sync', 'null', 'beanstalkd', 'sqs', 'redis', 'database'];
 
         $rootNode
             ->validate()
-                ->ifTrue(function ($v) {
+                ->ifTrue(static function ($v) {
 
                     if (!isset($v['connections'])) {
 
@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                 ->thenInvalid('Queue configuration must be defined for sqs, redis, beanstalkd and database drivers.')
             ->end()
             ->validate()
-            ->ifTrue(function ($v) {
+            ->ifTrue(static function ($v) {
 
                 if (!isset($v['connections'])) {
 
@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
             ->thenInvalid('Redis connectors must have client configuration defined.')
             ->end()
             ->validate()
-            ->ifTrue(function ($v) {
+            ->ifTrue(static function ($v) {
 
                 if (!isset($v['connections'])) {
 
@@ -83,14 +83,14 @@ class Configuration implements ConfigurationInterface
             ->thenInvalid('Retry after configuration is missing which is required to Redis and Beanstalkd connection.')
             ->end()
             ->validate()
-                ->ifTrue(function($v) {
+                ->ifTrue(static function($v) {
 
                     return (!empty($v['connections']['sqs']) && (empty($v['connections']['sqs']['prefix'])));
                 })
                 ->thenInvalid('SQS driver configuration must have prefix defined.')
             ->end()
             ->validate()
-            ->ifTrue(function($v) {
+            ->ifTrue(static function($v) {
 
                 return (!empty($v['connections']['database']) && (empty($v['connections']['database']['repository'])));
             })
