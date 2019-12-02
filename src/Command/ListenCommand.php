@@ -4,7 +4,7 @@ namespace IdeasBucket\QueueBundle\Command;
 
 use IdeasBucket\QueueBundle\Listener;
 use IdeasBucket\QueueBundle\ListenerOptions;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
  *
  * @package IdeasBucket\QueueBundle\Command
  */
-class ListenCommand extends ContainerAwareCommand
+class ListenCommand extends Command
 {
     /**
      * Listener which listens for the incoming job.
