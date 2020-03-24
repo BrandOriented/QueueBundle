@@ -132,8 +132,9 @@ class ListenCommand extends Command
      */
     protected function gatherOptions(InputInterface $input)
     {
+        $kernel = $this->getApplication()->getKernel();
         return new ListenerOptions(
-            $this->getContainer()->getParameter('kernel.environment'),
+            $kernel->getContainer()->getParameter('kernel.environment'),
             $input->getOption('delay'),
             $input->getOption('memory'),
             $input->getOption('timeout'),
