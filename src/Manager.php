@@ -186,7 +186,7 @@ class Manager implements ContainerAwareInterface
      */
     public function connection($name = null)
     {
-        $name = $name ?: $this->getDefaultDriver();
+        $name = $this->getDefaultDriver();
 
         // If the connection has not been resolved yet we will resolve it now as all
         // of the connections are resolved when they are actually needed so we do

@@ -43,7 +43,7 @@ class RestartCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->cache !== null) {
 
@@ -54,5 +54,7 @@ class RestartCommand extends Command
 
             $output->writeln('Cache service is not setup.');
         }
+
+        return 0;
     }
 }

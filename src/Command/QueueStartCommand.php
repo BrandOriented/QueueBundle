@@ -43,9 +43,11 @@ class QueueStartCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->switchInterface->turnOff(Manager::LOCK_NAME);
         $output->writeln('Queue worker started successfully');
+
+        return 0;
     }
 }

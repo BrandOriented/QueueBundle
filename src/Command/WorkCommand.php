@@ -114,7 +114,7 @@ class WorkCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->downForMaintenance($input->getOption('force')) && $input->getOption('once')) {
 
@@ -142,6 +142,8 @@ class WorkCommand extends Command
 
             $this->runWorker($connection, $queue, $input);
         }
+
+        return 0;
     }
 
     /**

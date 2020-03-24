@@ -57,7 +57,7 @@ class DatabaseCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -116,6 +116,8 @@ class DatabaseCommand extends Command
         $output->writeln('Files are generated in this location <comment>' . $outputPath . '</comment> Please move them to appropriate location.');
         $output->writeln('<comment>Please see documentation for more information.</comment>');
         $output->writeln('');
+
+        return 0;
     }
 
     /**

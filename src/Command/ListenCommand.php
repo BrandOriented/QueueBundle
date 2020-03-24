@@ -64,7 +64,7 @@ class ListenCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->setOutputHandler($this->listener, $output);
         $connection = $input->getArgument('connection');
@@ -82,6 +82,8 @@ class ListenCommand extends Command
 
             $this->listener->listen($connection, $queue, $this->gatherOptions($input));
         }
+
+        return 0;
     }
 
     /**

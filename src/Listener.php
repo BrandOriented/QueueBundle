@@ -75,7 +75,7 @@ class Listener
     {
         $command = 'idb_queue:work %s --once --queue=%s --delay=%s --memory=%s --sleep=%s --tries=%s';
 
-        return "{$this->phpBinary()} {$this->consoleBinary()} {$command}";
+        return "{$this->consoleBinary()} {$command}";
     }
 
     /**
@@ -133,7 +133,7 @@ class Listener
      */
     protected function consoleBinary()
     {
-        return defined('CONSOLE_BINARY') ? self::escapeArgument(CONSOLE_BINARY) : 'console';
+        return realpath(__DIR__.'/../../../../bin/console');
     }
 
     /**
@@ -179,7 +179,7 @@ class Listener
         // line that we will pass into a Symfony process object for processing.
         $command = $this->formatCommand($command, $connection, $queue, $options);
 
-        return new Process($command, $this->commandPath, null, null, $options->timeout);
+        return new Process(explode(" ", $command), $this->commandPath, null, null, $options->timeout);
     }
 
     /**

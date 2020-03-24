@@ -54,7 +54,7 @@ class GenerateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -76,13 +76,13 @@ class GenerateCommand extends Command
             $output->writeln('<comment>'. implode(', ', array_keys($this->kernel->getBundles())) .'</comment>');
             $output->writeln('');
 
-            return;
+            return 0;
 
         } catch (IOException $exception) {
 
             $output->writeln('<comment>'. $exception->getMessage() .'</comment>');
 
-            return;
+            return 0;
         }
 
         $msg = '<question>Please enter name of the class name for the job: </question> ';
@@ -93,14 +93,14 @@ class GenerateCommand extends Command
 
             $output->writeln('<error>Class name cannot be empty.</error>');
 
-            return;
+            return 0;
         }
 
         if (!preg_match('/^[A-Za-z]+[A-Za-z0-9]+$/', $className)) {
 
             $output->writeln('<error>Invalid class name.</error>');
 
-            return;
+            return 0;
         }
 
         $suggestedServiceId = StringHelper::studlyCase($bundleName) . '.job.' . StringHelper::studlyCase($className);
@@ -115,7 +115,7 @@ class GenerateCommand extends Command
 
             $output->writeln('<info>File already exist in path '. $fileNameWithPath .'</info>');
 
-            return;
+            return 0;
         }
 
         file_put_contents($fileNameWithPath, $this->replacePlaceholders(
@@ -136,6 +136,8 @@ class GenerateCommand extends Command
         $output->writeln('');
         $output->writeln('Files are generated in this location <comment>' . $path . '</comment>.');
         $output->writeln('');
+
+        return 0;
     }
 
     /**

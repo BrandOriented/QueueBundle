@@ -47,7 +47,7 @@ class FlushFailedCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->fire($input, $output, function(InputInterface $input, OutputInterface $output) {
 
@@ -65,5 +65,7 @@ class FlushFailedCommand extends Command
             }
 
         }, $this->failed);
+
+        return 0;
     }
 }

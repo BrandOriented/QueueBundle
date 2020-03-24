@@ -57,7 +57,7 @@ class FailedDatabaseCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -84,7 +84,7 @@ class FailedDatabaseCommand extends Command
             $output->writeln('<comment>'. implode(', ', array_keys($this->kernel->getBundles())) .'</comment>');
             $output->writeln('');
 
-            return;
+            return 0;
         }
 
         $question = new Question('<question>Please enter the class name for the entity (FailedJob):</question> ', 'FailedJob');
@@ -116,6 +116,8 @@ class FailedDatabaseCommand extends Command
         $output->writeln('Files are generated in this location <comment>' . $outputPath . '</comment> Please move them to appropriate location.');
         $output->writeln('<comment>Please see documentation for more information.</comment>');
         $output->writeln('');
+
+        return 0;
     }
 
     /**
