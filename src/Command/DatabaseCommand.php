@@ -84,7 +84,7 @@ class DatabaseCommand extends Command
             $output->writeln('<comment>'. implode(', ', array_keys($this->kernel->getBundles())) .'</comment>');
             $output->writeln('');
 
-            return;
+            return 255;
         }
 
         $question = new Question('<question>Please enter the class name for the entity (Queue):</question> ', 'Queue');
